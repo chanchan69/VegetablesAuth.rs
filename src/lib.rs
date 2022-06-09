@@ -209,7 +209,7 @@ impl AuthClient<'_> {
             "hwid": get_id(),
             "aid": self.aid,
             "key": self.api_key,
-            "resetKey": &self.key.unwrap()
+            "reset_key": &self.key.unwrap()
         });
 
         let signature = compute_hmac(self.client_secret, &to_string(&payload).unwrap());
