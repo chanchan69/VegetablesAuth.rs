@@ -53,7 +53,7 @@ impl fmt::Display for AuthError {
     }
 }
 
-impl AuthClient<'_> {
+impl<'r> AuthClient<'r> {
     pub fn authenticate(self) -> Result<AuthResponse, AuthError> {
         let client = reqwest::blocking::Client::builder()
             .no_proxy()
@@ -270,7 +270,7 @@ impl AuthClient<'_> {
         _version != current_version
     }
 
-    pub fn new(aid: &'static str, api_key: &'static str, client_secret: &'static str, rsa_key: Option<&'static str>) -> Self {
+    pub fn new(aid: &'r str, api_key: &'r str, client_secret: &'r str, rsa_key: Option<&'r str>) -> Self {
         Self {
             aid,
             api_key,
@@ -283,17 +283,17 @@ impl AuthClient<'_> {
         }
     }
 
-    pub fn add_key(mut self, key: &'static str) -> Self {
+    pub fn add_key(mut self, key: &'r str) -> Self {
         self.key = Some(key);
         self
     }
 
-    pub fn add_contact(mut self, contact: &'static str) -> Self {
+    pub fn add_contact(mut self, contact: &'r str) -> Self {
         self.contact = Some(contact);
         self
     }
 
-    pub fn add_credentials(mut self, username: &'static str, password: &'static str) -> Self {
+    pub fn add_credentials(mut self, username: &'r str, password: &'r str) -> Self {
         self.username = Some(username);
         self.password = Some(password);
         self
